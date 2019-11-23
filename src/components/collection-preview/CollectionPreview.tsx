@@ -8,15 +8,18 @@ interface IPreviewCollectionProps {
   items: IShopItem[];
 }
 
-const PreviewCollection = (props: IPreviewCollectionProps) => {
+const PreviewCollection: React.FC<IPreviewCollectionProps> = (
+  props: IPreviewCollectionProps
+) => {
   return (
     <div className={styles.collectionPreview}>
       <h1 className={styles.title}>{props.title.toUpperCase()}</h1>
       <div className={styles.preview}>
-        {props.items.filter((_, idx: number) => idx < 4)
-        .map((item: IShopItem) => (
-          <CollectionItem key={item.id} {...item}/>
-        ))}
+        {props.items
+          .filter((_, idx: number) => idx < 4)
+          .map((item: IShopItem) => (
+            <CollectionItem key={item.id} {...item} />
+          ))}
       </div>
     </div>
   );
