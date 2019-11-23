@@ -4,7 +4,7 @@ import Directory from '../../components/directory/Directory';
 
 interface IHomePageProps {}
 
-const HomePage = (props: IHomePageProps) => {
+const HomePage: React.FC<IHomePageProps> = (props: IHomePageProps) => {
   return (
     <div className={styles.homepage} data-test='home-component'>
       <Directory/>
