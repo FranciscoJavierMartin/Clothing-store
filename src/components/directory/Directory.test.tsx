@@ -2,19 +2,19 @@ import React from 'react';
 import { ShallowWrapper, shallow } from 'enzyme';
 import { sections } from '../../data/directory.data';
 import Directory from './Directory';
-import { findByTestAttr } from '../../../test/testUtils';
+import { findByTestAttr, Wrapper } from '../../../test/testUtils';
 import MenuItem from '../menuItem/MenuItem';
 
 /**
  * Setup function for app component.
- * @returns { ShallowWrapper }
+ * @returns { Wrapper }
  */
-function setup(): ShallowWrapper{
+function setup(): Wrapper{
   return shallow(<Directory/>);
 }
 
 describe('Directory component', () => {
-  let component: ShallowWrapper;
+  let component: Wrapper;
 
   beforeEach(() => {
     component = findByTestAttr(setup(), 'directory-component');
@@ -28,7 +28,8 @@ describe('Directory component', () => {
     expect(component.children().length).toBe(sections.length);
   });
 
+  // TODO: Fix this test
   xtest("children are 'MenuItem'", () => {
-    expect(component.childAt(0)).toEqual(<MenuItem title={sections[0].title} imageUrl={sections[0].imageUrl}/>);
+    expect(component.childAt(0)).toEqual(<MenuItem title={sections[0].title} imageUrl={sections[0].imageUrl} linkUrl={sections[0].linkUrl}/>);
   });
 });

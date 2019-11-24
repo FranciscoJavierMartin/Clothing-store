@@ -3,13 +3,13 @@ import styles from './FormInput.module.scss';
 
 interface IFormInputProps extends InputHTMLAttributes<any> {
   label?: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  //handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }
 
 const FormInput: React.FC<IFormInputProps> = ({
   label,
-  handleChange,
+  //handleChange,
   ...otherProps
 }: IFormInputProps) => {
   return (
@@ -25,7 +25,7 @@ const FormInput: React.FC<IFormInputProps> = ({
       ) : null}
       <input
         className={styles.formInput}
-        onChange={handleChange}
+        //onChange={handleChange}
         {...otherProps}
       />
     </div>
