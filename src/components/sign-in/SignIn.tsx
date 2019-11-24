@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './SignIn.module.scss';
 import FormInput from '../formInput/FormInput';
 import CustomButton from '../customButton/CustomButton';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 interface ISignInProps {}
 
@@ -9,10 +10,17 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    setEmail('');
-    setPassword('');
+
+    try{
+      await auth.signInWithEmailAndPassword(email, password);
+      setEmail('');
+      setPassword('');
+    } catch(error){
+      console.error(error);
+    }
+    
   };
   const handleInputEmail = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -35,7 +43,7 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
         <FormInput
           name='email'
           type='email'
-          handleChange={handleInputEmail}
+          onChange={handleInputEmail}
           value={email}
           label='email'
           required
@@ -44,11 +52,16 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
           name='password'
           type='password'
           value={password}
-          handleChange={handleInputPassword}
+          onChange={handleInputPassword}
           label='password'
           required
         />
-        <CustomButton type='submit'>Sign in</CustomButton>
+        <div className={styles.buttons}>
+          <CustomButton type='submit'>Sign in</CustomButton>
+          <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            Sign in with Google
+          </CustomButton>
+        </div>
       </form>
     </div>
   );
