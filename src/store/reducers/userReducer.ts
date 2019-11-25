@@ -15,7 +15,6 @@ export default (state: IUserState = initialState, action: IAction): IUserState =
         ...state,
         currentUser: action.payload
       };
-      
       break;
     default:
       newState = state;

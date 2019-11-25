@@ -5,11 +5,10 @@ import rootReducer from './reducers/rootReducer';
 
 const middlewares = [logger];
 
-// const customCompose:any =process.env.NODE_ENV === 'development' ? composeWithDevTools : compose;
+const customCompose:any =process.env.NODE_ENV === 'development' ? composeWithDevTools : compose;
 
 //const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default createStore(
   rootReducer,
-  // customCompose(applyMiddleware(...middlewares))
-  applyMiddleware(...middlewares)
+  customCompose(applyMiddleware(...middlewares))
 );

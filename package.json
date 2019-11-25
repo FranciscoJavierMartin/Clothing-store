@@ -2,6 +2,7 @@
   "name": "clothing-store",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "firebase": "^7.5.0",
     "react": "^16.11.0",
