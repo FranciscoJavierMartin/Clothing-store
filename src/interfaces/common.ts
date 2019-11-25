@@ -20,9 +20,12 @@ export interface IHomeSection {
   linkUrl: string;
 }
 
-export interface IUserData{
-  id: string;
+export interface IUserData {
   createdAt: Date;
   displayName: string;
   email: string;
+}
+
+export interface ICurrentUserData extends IUserData{
+  id: string;
 }

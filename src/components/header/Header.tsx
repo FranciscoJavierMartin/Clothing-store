@@ -4,12 +4,17 @@ import { auth } from '../../firebase/firebase.utils';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import styles from './Header.module.scss';
 import { shopPath, signInPath } from '../../constansts/routesName';
+import { useSelector } from 'react-redux';
+import { IGlobalState } from '../../interfaces/states';
+import { FirebaseUser } from '../../interfaces/customTypes';
 
-interface IHeaderProps {
-  currentUser?: firebase.User;
-}
+interface IHeaderProps {}
 
 const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
+  const currentUser = useSelector<IGlobalState, FirebaseUser>(
+    (state: IGlobalState) => state.user.currentUser
+  );
+
   return (
     <div className={styles.header}>
       <Link to='/' className={styles.logoContainer}>
@@ -22,15 +27,15 @@ const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
         <Link to={shopPath} className={styles.option}>
           CONTACT
         </Link>
-        {
-          props.currentUser ?
+        {currentUser ? (
           <div className={styles.option} onClick={() => auth.signOut()}>
             SIGN OUT
-          </div>:
+          </div>
+        ) : (
           <Link className={styles.option} to={signInPath}>
             SIGN IN
           </Link>
-        }
+        )}
       </div>
     </div>
   );

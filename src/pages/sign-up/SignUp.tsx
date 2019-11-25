@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import FormInput from '../formInput/FormInput';
-import CustomButton from '../customButton/CustomButton';
+import FormInput from '../../components/formInput/FormInput';
+import CustomButton from '../../components/customButton/CustomButton';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 import styles from './SignUp.module.scss';
+import { Link } from 'react-router-dom';
+import { signInPath } from '../../constansts/routesName';
 
 const SignUp: React.FC = () => {
   const [displayName, setDisplayName] = useState<string>('');
@@ -10,39 +12,52 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  const handleInputEmail = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputEmail = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setEmail(event.target.value);
   };
 
-  const handleInputDisplayName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputDisplayName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setDisplayName(event.target.value);
   };
 
-  const handleInputPassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputPassword = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setPassword(event.target.value);
   };
 
-  const handleInputConfirmPassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputConfirmPassword = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setConfirmPassword(event.target.value);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
 
-    if(password!== confirmPassword){
+    if (password !== confirmPassword) {
       alert("Passwords don't match");
     } else {
-      try{
-        const { user } = await auth.createUserWithEmailAndPassword(email, password);
-        if(user){
-          await createUserProfileDocument(user, {displayName});
+      try {
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        if (user) {
+          await createUserProfileDocument(user, { displayName });
 
           setEmail('');
           setDisplayName('');
           setPassword('');
           setConfirmPassword('');
         }
-      } catch(error){
+      } catch (error) {
         console.error(error);
       }
     }
@@ -61,7 +76,7 @@ const SignUp: React.FC = () => {
           label='Email'
           required
         />
-         <FormInput
+        <FormInput
           type='text'
           name='displayName'
           value={displayName}
@@ -87,6 +102,12 @@ const SignUp: React.FC = () => {
         />
         <CustomButton type='submit'>SIGN UP</CustomButton>
       </form>
+      <span className={styles.goToSignIn}>
+        Do you have an account?{' '}
+        <Link className={styles.link} to={signInPath}>
+          Click here
+        </Link>
+      </span>
     </div>
   );
 };
