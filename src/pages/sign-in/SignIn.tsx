@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styles from './SignIn.module.scss';
-import FormInput from '../formInput/FormInput';
-import CustomButton from '../customButton/CustomButton';
+import FormInput from '../../components/formInput/FormInput';
+import CustomButton from '../../components/customButton/CustomButton';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
+import { Link } from 'react-router-dom';
+import { signUpPath } from '../../constansts/routesName';
 
 interface ISignInProps {}
 
@@ -10,17 +12,18 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
 
-    try{
+    try {
       await auth.signInWithEmailAndPassword(email, password);
       setEmail('');
       setPassword('');
-    } catch(error){
+    } catch (error) {
       console.error(error);
     }
-    
   };
   const handleInputEmail = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -63,6 +66,12 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
           </CustomButton>
         </div>
       </form>
+      <span className={styles.goToSignUp}>
+        You do not have an account?{' '}
+        <Link className={styles.link} to={signUpPath}>
+          Click here
+        </Link>
+      </span>
     </div>
   );
 };

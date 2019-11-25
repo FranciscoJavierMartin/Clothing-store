@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.module.scss';
 import HomePage from './pages/home/HomePage';
 import ShopPage from './pages/shop/ShopPage';
-import SignInPage from './pages/sign-in-and-sign-up/SignInAndSignUp';
+import SignInPage from './pages/sign-in/SignIn';
+import SignUpPage from './pages/sign-up/SignUp';
 import Header from './components/header/Header';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { homePath, shopPath, signInPath } from './constansts/routesName';
-import { IUserData } from './interfaces/common';
+import { homePath, shopPath, signInPath, signUpPath } from './constansts/routesName';
+import * as userActions from './store/actions/userActions';
+import { useSelector } from 'react-redux';
+import { IGlobalState } from './interfaces/states';
+import { FirebaseUser } from './interfaces/customTypes';
 
 const App: React.FC = () => {
-  // TODO: Fix the proper user data interface
-  const [currentUser, setCurrentUser] = useState<any>();
   let unsubscribeFromAuth: firebase.Unsubscribe;
+  const currentUser = useSelector<IGlobalState, FirebaseUser>((state: IGlobalState) => state.user.currentUser);
 
   useEffect(() => {
     unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -20,19 +23,18 @@ const App: React.FC = () => {
         const userRef = await createUserProfileDocument(userAuth);
         if (userRef) {
           userRef.onSnapshot(snapShot => {
-            setCurrentUser({
+            userActions.setCurrentUser({
               id: snapShot.id,
-              ...snapShot.data()
+              // ...snapShot.data() as IUserData,
+              ...snapShot.data(),
             });
           });
         }
-      } else {
-        setCurrentUser(undefined);
       }
-    });
-  }, []);
 
-  useEffect(() => {
+      userActions.setCurrentUser(userAuth);
+    });
+
     return () => {
       if (unsubscribeFromAuth) {
         unsubscribeFromAuth();
@@ -43,11 +45,12 @@ const App: React.FC = () => {
   return (
     // TODO: Remove data-test in production
     <div data-test='component-app'>
-      <Header currentUser={currentUser} />
+      <Header/>
       <Switch>
         <Route exact path={homePath} component={HomePage} />
         <Route path={shopPath} component={ShopPage} />
-        <Route path={signInPath} component={SignInPage} />
+        <Route path={signInPath} render={()=> currentUser ? (<Redirect to={homePath}/>) : (<SignInPage/>)}  />
+        <Route path={signUpPath} component={SignUpPage} />
       </Switch>
     </div>
   );
