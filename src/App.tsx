@@ -5,17 +5,29 @@ import HomePage from './pages/home/HomePage';
 import ShopPage from './pages/shop/ShopPage';
 import SignInPage from './pages/sign-in/SignIn';
 import SignUpPage from './pages/sign-up/SignUp';
+import CheckoutPage from './pages/checkout/CheckoutPage';
 import Header from './components/header/Header';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { homePath, shopPath, signInPath, signUpPath } from './constansts/routesName';
+import {
+  homePath,
+  shopPath,
+  signInPath,
+  signUpPath,
+  checkoutPath
+} from './constansts/routesName';
 import * as userActions from './store/actions/userActions';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IGlobalState } from './interfaces/states';
 import { FirebaseUser } from './interfaces/customTypes';
+import { IUserData } from './interfaces/common';
+import { selectCurrentUser } from './store/selectors/userSelectors';
 
 const App: React.FC = () => {
   let unsubscribeFromAuth: firebase.Unsubscribe;
-  const currentUser = useSelector<IGlobalState, FirebaseUser>((state: IGlobalState) => state.user.currentUser);
+  const currentUser = useSelector<IGlobalState, FirebaseUser>(
+    selectCurrentUser
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -23,16 +35,17 @@ const App: React.FC = () => {
         const userRef = await createUserProfileDocument(userAuth);
         if (userRef) {
           userRef.onSnapshot(snapShot => {
-            userActions.setCurrentUser({
-              id: snapShot.id,
-              // ...snapShot.data() as IUserData,
-              ...snapShot.data(),
-            });
+            dispatch(
+              userActions.setCurrentUser({
+                id: snapShot.id,
+                ...(snapShot.data() as IUserData)
+              })
+            );
           });
         }
       }
 
-      userActions.setCurrentUser(userAuth);
+      dispatch(userActions.setCurrentUser(userAuth));
     });
 
     return () => {
@@ -45,11 +58,17 @@ const App: React.FC = () => {
   return (
     // TODO: Remove data-test in production
     <div data-test='component-app'>
-      <Header/>
+      <Header />
       <Switch>
         <Route exact path={homePath} component={HomePage} />
         <Route path={shopPath} component={ShopPage} />
-        <Route path={signInPath} render={()=> currentUser ? (<Redirect to={homePath}/>) : (<SignInPage/>)}  />
+        <Route exact path={checkoutPath} component={CheckoutPage}/>
+        <Route
+          path={signInPath}
+          render={() =>
+            currentUser ? <Redirect to={homePath} /> : <SignInPage />
+          }
+        />
         <Route path={signUpPath} component={SignUpPage} />
       </Switch>
     </div>

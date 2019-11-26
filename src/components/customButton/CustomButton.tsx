@@ -3,15 +3,24 @@ import styles from './CustomButton.module.scss';
 
 interface ICustomButtonProps extends ButtonHTMLAttributes<any> {
   isGoogleSignIn?: boolean;
+  inverted?: boolean;
 }
 
 const CustomButton: React.FC<ICustomButtonProps> = ({
   children,
   isGoogleSignIn,
+  inverted,
   ...otherProps
 }: ICustomButtonProps) => {
   return (
-    <button className={`${isGoogleSignIn ? styles.googleSignIn : ''} ${styles.customButton}`} {...otherProps}>
+    <button
+      className={`
+      ${inverted ? 'inverted' : ''}
+      ${isGoogleSignIn ? styles.googleSignIn : ''} ${
+        styles.customButton
+      }`}
+      {...otherProps}
+    >
       {children}
     </button>
   );
