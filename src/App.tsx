@@ -5,24 +5,27 @@ import HomePage from './pages/home/HomePage';
 import ShopPage from './pages/shop/ShopPage';
 import SignInPage from './pages/sign-in/SignIn';
 import SignUpPage from './pages/sign-up/SignUp';
+import CheckoutPage from './pages/checkout/CheckoutPage';
 import Header from './components/header/Header';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import {
   homePath,
   shopPath,
   signInPath,
-  signUpPath
+  signUpPath,
+  checkoutPath
 } from './constansts/routesName';
 import * as userActions from './store/actions/userActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { IGlobalState } from './interfaces/states';
 import { FirebaseUser } from './interfaces/customTypes';
 import { IUserData } from './interfaces/common';
+import { selectCurrentUser } from './store/selectors/userSelectors';
 
 const App: React.FC = () => {
   let unsubscribeFromAuth: firebase.Unsubscribe;
   const currentUser = useSelector<IGlobalState, FirebaseUser>(
-    (state: IGlobalState) => state.user.currentUser
+    selectCurrentUser
   );
   const dispatch = useDispatch();
 
@@ -59,6 +62,7 @@ const App: React.FC = () => {
       <Switch>
         <Route exact path={homePath} component={HomePage} />
         <Route path={shopPath} component={ShopPage} />
+        <Route exact path={checkoutPath} component={CheckoutPage}/>
         <Route
           path={signInPath}
           render={() =>

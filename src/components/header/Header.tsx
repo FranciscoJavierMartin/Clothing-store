@@ -1,19 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CartIcon from '../cart-icon/CartIcon';
+import CartDropdown from '../cart-dropdown/CartDropdown';
 import { auth } from '../../firebase/firebase.utils';
+import { seletcCartHidden } from '../../store/selectors/cartSelectors';
+import { selectCurrentUser } from '../../store/selectors/userSelectors';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import styles from './Header.module.scss';
 import { shopPath, signInPath } from '../../constansts/routesName';
 import { useSelector } from 'react-redux';
 import { IGlobalState } from '../../interfaces/states';
 import { FirebaseUser } from '../../interfaces/customTypes';
+import styles from './Header.module.scss';
 
 interface IHeaderProps {}
 
 const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
   const currentUser = useSelector<IGlobalState, FirebaseUser>(
-    (state: IGlobalState) => state.user.currentUser
+    selectCurrentUser
   );
+  const hidden = useSelector<IGlobalState, boolean>(seletcCartHidden);
 
   return (
     <div className={styles.header}>
@@ -36,7 +41,9 @@ const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {hidden ? null : <CartDropdown />}
     </div>
   );
 };

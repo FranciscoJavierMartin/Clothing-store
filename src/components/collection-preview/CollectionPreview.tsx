@@ -18,7 +18,7 @@ const PreviewCollection: React.FC<IPreviewCollectionProps> = (
         {props.items
           .filter((_, idx: number) => idx < 4)
           .map((item: IShopItem) => (
-            <CollectionItem key={item.id} {...item} />
+            <CollectionItem key={item.id} item={item} />
           ))}
       </div>
     </div>
