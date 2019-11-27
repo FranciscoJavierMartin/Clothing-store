@@ -1,3 +1,12 @@
+export interface IShopData {
+  [key: string]: IShopSection;
+  hats: IShopSection;
+  sneakers: IShopSection;
+  jackets: IShopSection;
+  womens: IShopSection;
+  mens: IShopSection;
+}
+
 export interface IShopSection {
   id: number;
   title: string;

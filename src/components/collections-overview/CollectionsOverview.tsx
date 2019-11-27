@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import CollectionPreview from '../collection-preview/CollectionPreview';
 import styles from './CollectionsOverview.module.scss';
 import { IGlobalState } from '../../interfaces/states';
-import { selectCollections } from '../../store/selectors/shopSelectors';
-import { IShopSection } from '../../interfaces/common';
+import { selectCollectionsForPreview } from '../../store/selectors/shopSelectors';
+import { IShopSection, IShopData } from '../../interfaces/common';
 
 const CollectionOverview: React.FC = () => {
-  const collections = useSelector<IGlobalState, IShopSection[]>(selectCollections);
+  const collections = useSelector<IGlobalState, IShopSection[]>(selectCollectionsForPreview);
 
   return (
     <div className={styles.collectionsOverview}>

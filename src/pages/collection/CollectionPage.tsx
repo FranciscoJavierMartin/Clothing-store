@@ -20,10 +20,19 @@ const CollectionPage: React.FC<ICollectionPageProps> = (
   const collection = useSelector<IGlobalState, IShopSection | undefined>(
     state => selectCollection(state, urlParam)
   );
-  console.log(collection);
-  return (
+  
+  return collection ? (
     <div className={styles.collectionPage}>
-      <h2>Category pages</h2>
+      <h2 className={styles.title}>{collection.title}</h2>
+      <div className={styles.items}>
+        {collection.items.map(item => (
+          <CollectionItem key={item.id} item={item} />
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div className={styles.collectionPage}>
+      <h1>Not found</h1>
     </div>
   );
 };
