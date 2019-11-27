@@ -64,12 +64,13 @@ const App: React.FC = () => {
         <Route path={shopPath} component={ShopPage} />
         <Route exact path={checkoutPath} component={CheckoutPage}/>
         <Route
+          exact
           path={signInPath}
           render={() =>
             currentUser ? <Redirect to={homePath} /> : <SignInPage />
           }
         />
-        <Route path={signUpPath} component={SignUpPage} />
+        <Route exact path={signUpPath} component={SignUpPage} />
       </Switch>
     </div>
   );

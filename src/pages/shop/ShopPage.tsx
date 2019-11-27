@@ -8,8 +8,8 @@ interface IShopPageProps extends RouteComponentProps {}
 const ShopPage: React.FC<IShopPageProps> = (props: IShopPageProps) => {
   return(
     <div className='shop-page'>
-      <Route exatc path={`${props.match.path}`} component={CollectionOverview}/>
-      <Route path={`${props.match.path}/:categoryId`} component={CollectionPage}/>
+      <Route exact path={`${props.match.path}`} component={CollectionOverview}/>
+      <Route path={`${props.match.path}/:collectionId`} component={CollectionPage}/>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { IShopSection, IHomeSection } from "../interfaces/common";
+import { IShopSection, IHomeSection, IShopData } from "../interfaces/common";
 
 export const sections: IHomeSection[] = [
   {
@@ -35,8 +35,8 @@ export const sections: IHomeSection[] = [
   }
 ];
 
-export const SHOP_DATA: IShopSection[] = [
-  {
+export const SHOP_DATA: IShopData = {
+  hats: {
     id: 1,
     title: 'Hats',
     routeName: 'hats',
@@ -97,7 +97,7 @@ export const SHOP_DATA: IShopSection[] = [
       }
     ]
   },
-  {
+  sneakers: {
     id: 2,
     title: 'Sneakers',
     routeName: 'sneakers',
@@ -152,7 +152,7 @@ export const SHOP_DATA: IShopSection[] = [
       }
     ]
   },
-  {
+  jackets: {
     id: 3,
     title: 'Jackets',
     routeName: 'jackets',
@@ -189,7 +189,7 @@ export const SHOP_DATA: IShopSection[] = [
       }
     ]
   },
-  {
+  womens: {
     id: 4,
     title: 'Womens',
     routeName: 'womens',
@@ -238,7 +238,7 @@ export const SHOP_DATA: IShopSection[] = [
       }
     ]
   },
-  {
+  mens: {
     id: 5,
     title: 'Mens',
     routeName: 'mens',
@@ -281,4 +281,4 @@ export const SHOP_DATA: IShopSection[] = [
       }
     ]
   }
-];
+};
