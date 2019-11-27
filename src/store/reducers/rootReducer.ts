@@ -6,6 +6,7 @@ import userReducer from './userReducer';
 import cartReducer from './cartReducer';
 import { IGlobalState } from '../../interfaces/states';
 import directoryReducer from './directoryReducer';
+import shopReducer from './shopReducer';
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +18,7 @@ const rootReducer = combineReducers<IGlobalState>({
   user: userReducer,
   cart: cartReducer,
   directory: directoryReducer,
+  shop: shopReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
