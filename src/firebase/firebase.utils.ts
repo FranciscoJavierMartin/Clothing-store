@@ -2,9 +2,6 @@ import { usersCollection } from './../constansts/collectionNames';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import { config } from 'dotenv';
-
-config();
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
