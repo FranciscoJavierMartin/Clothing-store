@@ -4,7 +4,7 @@ import MenuItem from '../menuItem/MenuItem';
 import { IHomeSection } from '../../interfaces/common';
 import { useSelector } from 'react-redux';
 import { IGlobalState } from '../../interfaces/states';
-import { selectDirectorySections } from '../../store/selectors/directorySelector';
+import { selectDirectorySections } from '../../store/selectors/directorySelectors';
 
 interface IDirectoryProps {}
 

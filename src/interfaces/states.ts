@@ -1,10 +1,11 @@
 import { FirebaseUser } from "./customTypes";
-import { IShopItem, IHomeSection } from "./common";
+import { IShopItem, IHomeSection, IShopSection } from "./common";
 
 export interface IGlobalState {
   user: IUserState;
   cart: ICartState;
   directory: IDirectoryState;
+  shop: IShopState;
 }
 
 export interface IUserState{
@@ -18,4 +19,8 @@ export interface ICartState {
 
 export interface IDirectoryState {
   sections: IHomeSection[];
+}
+
+export interface IShopState {
+  collections: IShopSection[];
 }
