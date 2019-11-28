@@ -4,10 +4,15 @@ import { persistStore } from 'redux-persist';
 import logger from 'redux-logger';
 import rootReducer from './reducers/rootReducer';
 
-const middlewares = [logger];
+const middlewares = [];
+let customCompose: any = compose;
 
-const customCompose: any =
-  process.env.NODE_ENV === 'development' ? composeWithDevTools : compose;
+if (process.env.NODE_ENV === 'development'){
+  middlewares.push(logger);
+  customCompose = composeWithDevTools;
+}
+
+   
 
 export const store = createStore(
   rootReducer,
