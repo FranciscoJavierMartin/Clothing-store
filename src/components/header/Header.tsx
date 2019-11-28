@@ -33,7 +33,7 @@ const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
         <OptionLink to={shopPath}>SHOP</OptionLink>
         <OptionLink to={shopPath}>CONTACT</OptionLink>
         {currentUser ? (
-          <OptionLink to={signInPath} onClick={() => auth.signOut()}>
+          <OptionLink as='div' onClick={() => auth.signOut()}>
             SIGN OUT
           </OptionLink>
         ) : (

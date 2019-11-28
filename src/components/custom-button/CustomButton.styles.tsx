@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 const buttonStyles = css`
   background-color: black;
@@ -34,12 +34,18 @@ const googleSignInStyles = css`
   }
 `;
 
-const getButtonStyles = (props: any) => {
+const getButtonStyles = (props: any): FlattenSimpleInterpolation => {
+  let res: FlattenSimpleInterpolation;
+
   if (props.isGoogleSignIn) {
-    return googleSignInStyles;
+    res = googleSignInStyles;
+  } else if(props.inverted){
+    res = invertedButtonStyles;
+  } else {
+    res = buttonStyles;
   }
 
-  return props.inverted ? invertedButtonStyles : buttonStyles;
+  return res;
 };
 
 export const CustomButtonContainer = styled.button`
