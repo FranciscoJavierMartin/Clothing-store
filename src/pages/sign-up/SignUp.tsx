@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import FormInput from '../../components/formInput/FormInput';
-import CustomButton from '../../components/customButton/CustomButton';
+import FormInput from '../../components/form-input/FormInput';
+import CustomButton from '../../components/custom-button/CustomButton';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
-import styles from './SignUp.module.scss';
-import { Link } from 'react-router-dom';
 import { signInPath } from '../../constansts/routesName';
+import {
+  SignUpContainer,
+  SignUpTitle,
+  GoToSignIn,
+  CustomLink,
+  ButtonsBarContainer
+} from './SignUp.styles';
 
 const SignUp: React.FC = () => {
   const [displayName, setDisplayName] = useState<string>('');
@@ -64,10 +69,10 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className={styles.signUp}>
-      <h2 className={styles.title}>I do not have an account</h2>
+    <SignUpContainer>
+      <SignUpTitle>I do not have an account</SignUpTitle>
       <span>Sign up with your email and password</span>
-      <form className={styles.signUpForm} onSubmit={handleSubmit}>
+      <form className='sign-up-form' onSubmit={handleSubmit}>
         <FormInput
           type='email'
           name='email'
@@ -100,15 +105,15 @@ const SignUp: React.FC = () => {
           label='Confirm password'
           required
         />
-        <CustomButton type='submit'>SIGN UP</CustomButton>
+        <ButtonsBarContainer>
+          <CustomButton type='submit'>SIGN UP</CustomButton>
+        </ButtonsBarContainer>
       </form>
-      <span className={styles.goToSignIn}>
+      <GoToSignIn>
         Do you have an account?{' '}
-        <Link className={styles.link} to={signInPath}>
-          Click here
-        </Link>
-      </span>
-    </div>
+        <CustomLink to={signInPath}>Click here</CustomLink>
+      </GoToSignIn>
+    </SignUpContainer>
   );
 };
 

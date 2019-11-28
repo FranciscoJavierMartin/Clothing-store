@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import styles from './SignIn.module.scss';
-import FormInput from '../../components/formInput/FormInput';
-import CustomButton from '../../components/customButton/CustomButton';
+import FormInput from '../../components/form-input/FormInput';
+import CustomButton from '../../components/custom-button/CustomButton';
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
-import { Link } from 'react-router-dom';
 import { signUpPath } from '../../constansts/routesName';
+import {
+  SignInContainer,
+  SignInTitle,
+  ButtonsBarContainer,
+  GoToSignUp,
+  CustomLink
+} from './SignIn.styles';
 
 interface ISignInProps {}
 
@@ -37,9 +42,10 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
     setPassword(event.target.value);
   };
 
+  // TODO: Add styles to go to sign up
   return (
-    <div className={styles.signIn}>
-      <h2>I already have an account</h2>
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
       <span>Sign in with your email and password</span>
 
       <form onSubmit={handleSubmit}>
@@ -59,20 +65,20 @@ const SignIn: React.FC<ISignInProps> = (props: ISignInProps) => {
           label='password'
           required
         />
-        <div className={styles.buttons}>
+        <ButtonsBarContainer>
           <CustomButton type='submit'>Sign in</CustomButton>
           <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
             Sign in with Google
           </CustomButton>
-        </div>
+        </ButtonsBarContainer>
       </form>
-      <span className={styles.goToSignUp}>
+      <GoToSignUp>
         You do not have an account?{' '}
-        <Link className={styles.link} to={signUpPath}>
+        <CustomLink to={signUpPath}>
           Click here
-        </Link>
-      </span>
-    </div>
+        </CustomLink>
+      </GoToSignUp>
+    </SignInContainer>
   );
 };
 

@@ -1,28 +1,40 @@
 import React from 'react';
 import CollectionItem from '../collection-item/CollectionItem';
-import styles from './CollectionPreview.module.scss';
 import { IShopItem } from '../../interfaces/common';
+import {
+  CollectionPreviewContainer,
+  TitleContainer,
+  PreviewContainer
+} from './CollectionPreview.styles';
+import { useHistory, RouteComponentProps } from 'react-router';
 
-interface IPreviewCollectionProps {
+interface ICollectionPreviewProps extends RouteComponentProps<any> {
   title: string;
   items: IShopItem[];
+  routeName: string;
 }
 
-const PreviewCollection: React.FC<IPreviewCollectionProps> = (
-  props: IPreviewCollectionProps
+const CollectionPreview: React.FC<ICollectionPreviewProps> = (
+  props: ICollectionPreviewProps
 ) => {
+  const history = useHistory();
+
   return (
-    <div className={styles.collectionPreview}>
-      <h1 className={styles.title}>{props.title.toUpperCase()}</h1>
-      <div className={styles.preview}>
+    <CollectionPreviewContainer>
+      <TitleContainer
+        onClick={() => history.push(`${props.match.path}/${props.routeName}`)}
+      >
+        {props.title.toUpperCase()}
+      </TitleContainer>
+      <PreviewContainer>
         {props.items
           .filter((_, idx: number) => idx < 4)
           .map((item: IShopItem) => (
             <CollectionItem key={item.id} item={item} />
           ))}
-      </div>
-    </div>
+      </PreviewContainer>
+    </CollectionPreviewContainer>
   );
 };
 
-export default PreviewCollection;
+export default CollectionPreview;

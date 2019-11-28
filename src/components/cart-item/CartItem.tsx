@@ -1,6 +1,10 @@
 import React from 'react';
-import styles from './CartItem.module.scss';
 import { IShopItem } from '../../interfaces/common';
+import {
+  CartItemContainer,
+  ItemDetailsContainer,
+  CartItemImage
+} from './CartItem.styles';
 
 interface ICartItemProps {
   item: IShopItem;
@@ -8,15 +12,15 @@ interface ICartItemProps {
 
 const CartItem: React.FC<ICartItemProps> = (props: ICartItemProps) => {
   return (
-    <div className={styles.cartItem}>
-      <img src={props.item.imageUrl} alt='item' />
-      <div className={styles.itemDetails}>
-        <span className={styles.name}>{props.item.name}</span>
-        <span className={styles.price}>
+    <CartItemContainer>
+      <CartItemImage alt='item' src={props.item.imageUrl}/>
+      <ItemDetailsContainer>
+        <span>{props.item.name}</span>
+        <span>
           {props.item.quantity || 1} x ${props.item.price}
         </span>
-      </div>
-    </div>
+      </ItemDetailsContainer>
+    </CartItemContainer>
   );
 };
 

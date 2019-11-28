@@ -1,7 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './CartDropdown.module.scss';
-import CustomButton from '../customButton/CustomButton';
 import CartItem from '../cart-item/CartItem';
 import { IGlobalState } from '../../interfaces/states';
 import { IShopItem } from '../../interfaces/common';
@@ -9,6 +7,12 @@ import { selectCartItems } from '../../store/selectors/cartSelectors';
 import { useHistory } from 'react-router';
 import { checkoutPath } from '../../constansts/routesName';
 import * as cartActions from '../../store/actions/cartActions';
+import {
+  CartDropdownContainer,
+  CartDropdownButton,
+  EmptyMessageContainer,
+  CartItemsContainer
+} from './CartDropdown.styles';
 
 const CartDropdown: React.FC = () => {
   const cartItems = useSelector<IGlobalState, IShopItem[]>(selectCartItems);
@@ -16,25 +20,25 @@ const CartDropdown: React.FC = () => {
   const history = useHistory();
 
   return (
-    <div className={styles.cartDropdown}>
-      <div className={styles.cartItems}>
+    <CartDropdownContainer>
+      <CartItemsContainer>
         {cartItems.length !== 0 ? (
           cartItems.map(cartItem => (
             <CartItem key={cartItem.id} item={cartItem} />
           ))
         ) : (
-          <span className={styles.emptyMessage}>Your cart is empty</span>
+          <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
         )}
-      </div>
-      <CustomButton
+      </CartItemsContainer>
+      <CartDropdownButton
         onClick={() => {
           dispatch(cartActions.toggleCartHidden());
           history.push(checkoutPath);
         }}
       >
         GO TO THE CHECKOUT
-      </CustomButton>
-    </div>
+      </CartDropdownButton>
+    </CartDropdownContainer>
   );
 };
 
