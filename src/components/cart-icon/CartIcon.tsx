@@ -1,10 +1,13 @@
 import React from 'react';
-import styles from './CartIcon.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import * as cartActions from '../../store/actions/cartActions';
-import { ReactComponent as ShopppingIcon } from '../../assets/shopping-bag.svg';
 import { IGlobalState } from '../../interfaces/states';
 import { selectCartItemsCount } from '../../store/selectors/cartSelectors';
+import {
+  CartContainer,
+  ShoppingIcon,
+  ItemCountContainer
+} from './CartIcon.styles';
 
 const CartIcon: React.FC = () => {
   const dispatch = useDispatch();
@@ -13,15 +16,14 @@ const CartIcon: React.FC = () => {
   );
 
   return (
-    <div
-      className={styles.cartIcon}
+    <CartContainer
       onClick={() => dispatch(cartActions.toggleCartHidden())}
     >
-      <ShopppingIcon className={styles.shoppingIcon} />
-      <span className={styles.itemCount}>
+      <ShoppingIcon />
+      <ItemCountContainer>
         {numberOfItemsInCart > 9 ? '+9' : numberOfItemsInCart}
-      </span>
-    </div>
+      </ItemCountContainer>
+    </CartContainer>
   );
 };
 

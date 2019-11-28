@@ -1,12 +1,13 @@
 import React from 'react';
-import styles from './Directory.module.scss';
-import MenuItem from '../menuItem/MenuItem';
+import { DirectoryMenuContainer } from './Directory.styles';
+import MenuItem from '../menu-item/MenuItem';
 import { IHomeSection } from '../../interfaces/common';
 import { useSelector } from 'react-redux';
 import { IGlobalState } from '../../interfaces/states';
 import { selectDirectorySections } from '../../store/selectors/directorySelectors';
+import { RouteComponentProps } from 'react-router';
 
-interface IDirectoryProps {}
+interface IDirectoryProps extends RouteComponentProps{}
 
 const Directory: React.FC<IDirectoryProps> = (props: IDirectoryProps) => {
   const sections = useSelector<IGlobalState, IHomeSection[]>(
@@ -14,11 +15,11 @@ const Directory: React.FC<IDirectoryProps> = (props: IDirectoryProps) => {
   );
 
   return (
-    <div className={styles.directoryMenu} data-test='directory-component'>
+    <DirectoryMenuContainer data-test='directory-component'>
       {sections.map((section: IHomeSection) => (
-        <MenuItem key={section.id} {...section} />
+        <MenuItem key={section.id} {...section} {...props}/>
       ))}
-    </div>
+    </DirectoryMenuContainer>
   );
 };
 

@@ -3,7 +3,7 @@ import { ShallowWrapper, shallow } from 'enzyme';
 import { sections } from '../../data/directory.data';
 import Directory from './Directory';
 import { findByTestAttr, Wrapper } from '../../../test/testUtils';
-import MenuItem from '../menuItem/MenuItem';
+import MenuItem from '../menu-item/MenuItem';
 
 /**
  * Setup function for app component.

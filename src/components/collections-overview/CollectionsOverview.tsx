@@ -1,20 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import CollectionPreview from '../collection-preview/CollectionPreview';
-import styles from './CollectionsOverview.module.scss';
 import { IGlobalState } from '../../interfaces/states';
 import { selectCollectionsForPreview } from '../../store/selectors/shopSelectors';
-import { IShopSection, IShopData } from '../../interfaces/common';
+import { IShopSection } from '../../interfaces/common';
+import { CollectionsOverviewContainer } from './CollectionsOverview.styles';
+import { RouteComponentProps } from 'react-router';
 
-const CollectionOverview: React.FC = () => {
+interface ICollectionOverviewProps extends RouteComponentProps{}
+
+const CollectionOverview: React.FC<ICollectionOverviewProps> = (props: ICollectionOverviewProps) => {
   const collections = useSelector<IGlobalState, IShopSection[]>(selectCollectionsForPreview);
-
+  // TODO: Check if works properly
   return (
-    <div className={styles.collectionsOverview}>
+    <CollectionsOverviewContainer>
       {collections.map(({id, ...otherCollectionProps}) => (
-        <CollectionPreview key={id} {...otherCollectionProps}/>
-      )) }
-    </div>
+        <CollectionPreview key={id} {...otherCollectionProps} {...props}/>
+      ))}
+    </CollectionsOverviewContainer>
   )
 }
 
