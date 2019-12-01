@@ -22,7 +22,7 @@ import { FirebaseUser } from './interfaces/customTypes';
 import { IUserData } from './interfaces/common';
 import { selectCurrentUser } from './store/selectors/userSelectors';
 
-const App: React.FC = () => {
+const App: React.FC<any> = (props: any) => {
   let unsubscribeFromAuth: firebase.Unsubscribe;
   const currentUser = useSelector<IGlobalState, FirebaseUser>(
     selectCurrentUser
@@ -47,6 +47,8 @@ const App: React.FC = () => {
 
       dispatch(userActions.setCurrentUser(userAuth));
     });
+
+
 
     return () => {
       if (unsubscribeFromAuth) {
