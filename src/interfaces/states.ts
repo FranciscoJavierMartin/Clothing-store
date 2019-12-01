@@ -22,5 +22,7 @@ export interface IDirectoryState {
 }
 
 export interface IShopState {
-  collections: IShopData;
+  collections: IShopData | null;
+  isFetching: boolean;
+  errorMessage: string;
 }

@@ -1,10 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from './reducers/rootReducer';
 
-const middlewares = [];
+const middlewares: any[] = [thunk];
 let customCompose: any = compose;
 
 if (process.env.NODE_ENV === 'development'){
