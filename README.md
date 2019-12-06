@@ -1,6 +1,6 @@
 # Clothing store
 
-To initialize the project, create a file named ```.env``` that contains the following keys.
+To initialize the project, create a file named ```.env``` in the client folder that contains the following keys.
 ```
 REACT_APP_API_KEY
 REACT_APP_AUTH_DOMAIN

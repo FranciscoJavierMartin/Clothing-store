@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import './App.module.scss';
 import HomePage from './pages/home/HomePage';
@@ -14,26 +14,45 @@ import {
   signUpPath,
   checkoutPath
 } from './constansts/routesName';
-import { useSelector, useDispatch } from 'react-redux';
-import { IGlobalState } from './interfaces/states';
-import { FirebaseUser } from './interfaces/customTypes';
-import { selectCurrentUser } from './store/user/userSelectors';
-import * as userActions from './store/user/userActions';
+import CurrentUserContext from './contexts/current-user/currentUserContext';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 const App: React.FC<any> = (props: any) => {
-  const currentUser = useSelector<IGlobalState, FirebaseUser>(
-    selectCurrentUser
-  );
-  const dispatch = useDispatch();
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  let unsubscribeFromAuth: any = null;
 
   useEffect(() => {
-    dispatch(userActions.checkUserSession());
-  }, [dispatch, currentUser]);
+    unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if(userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+        if(userRef){
+          userRef.onSnapshot(snapShot => {
+            setCurrentUser({
+              id: snapShot.id,
+              ...snapShot.data()
+            });
+          });
+        }
+      }
+
+      setCurrentUser(userAuth);
+    });
+
+    return () => {
+      if(unsubscribeFromAuth){
+        unsubscribeFromAuth();
+      }
+    }
+  },[]);
+
+
 
   return (
     // TODO: Remove data-test in production
     <div data-test='component-app'>
-      <Header />
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+      </CurrentUserContext.Provider>
       <Switch>
         <Route exact path={homePath} component={HomePage} />
         <Route path={shopPath} component={ShopPage} />

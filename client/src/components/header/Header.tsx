@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CartIcon from '../cart-icon/CartIcon';
 import CartDropdown from '../cart-dropdown/CartDropdown';
-import { seletcCartHidden } from '../../store/cart/cartSelectors';
-import { selectCurrentUser } from '../../store/user/userSelectors';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { shopPath, signInPath } from '../../constansts/routesName';
-import { useSelector, useDispatch } from 'react-redux';
-import { IGlobalState } from '../../interfaces/states';
-import { FirebaseUser } from '../../interfaces/customTypes';
-import * as userActions from '../../store/user/userActions';
+import CurrentUserContext from '../../contexts/current-user/currentUserContext';
+import { CartContext } from '../../provider/cart/cartProvider';
+import { auth } from '../../firebase/firebase.utils';
 import {
   HeaderContainer,
   LogoContainer,
@@ -19,11 +16,8 @@ import {
 interface IHeaderProps {}
 
 const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
-  const currentUser = useSelector<IGlobalState, FirebaseUser>(
-    selectCurrentUser
-  );
-  const hidden = useSelector<IGlobalState, boolean>(seletcCartHidden);
-  const dispatch = useDispatch();
+  const currentUser = useContext(CurrentUserContext);
+  const { hidden } = useContext(CartContext);
 
   return (
     <HeaderContainer>
@@ -34,16 +28,15 @@ const Header: React.FC<IHeaderProps> = (props: IHeaderProps) => {
         <OptionLink to={shopPath}>SHOP</OptionLink>
         <OptionLink to={shopPath}>CONTACT</OptionLink>
         {currentUser ? (
-          <OptionLink
-            as='div'
-            onClick={() => dispatch(userActions.signOutStart())}
-          >
+          <OptionLink as='div' onClick={() => auth.signOut()}>
             SIGN OUT
           </OptionLink>
         ) : (
           <OptionLink to={signInPath}>SIGN IN</OptionLink>
         )}
-        <CartIcon />
+        
+          <CartIcon />
+        
       </OptionsContainer>
       {hidden ? null : <CartDropdown />}
     </HeaderContainer>

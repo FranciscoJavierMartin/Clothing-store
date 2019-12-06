@@ -1,14 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext } from 'react';
 import { RouteComponentProps } from 'react-router';
 import CollectionItem from '../../components/collection-item/CollectionItem';
-import {
-  selectCollection,
-  selectIsCollectionsLoaded
-} from '../../store/shop/shopSelectors';
-import { IGlobalState } from '../../interfaces/states';
-import { IShopSection } from '../../interfaces/common';
-
+import CollectionsContext from '../../contexts/collections/collectionsContext';
 import {
   CollectionPageContainer,
   CollectionTitle,
@@ -25,35 +18,27 @@ interface ICollectionPageProps
 const CollectionPage: React.FC<ICollectionPageProps> = (
   props: ICollectionPageProps
 ) => {
-  let res: any;
-  const urlParam = props.match.params.collectionId;
-  const isCollectionLoaded = useSelector<IGlobalState, boolean>(
-    selectIsCollectionsLoaded
-  );
-  const collection = useSelector<IGlobalState, IShopSection | null>(state =>
-    selectCollection(state, urlParam)
-  );
+  let res: React.ReactNode;
+  const collection = useContext(CollectionsContext)[
+    props.match.params.collectionId
+  ];
+  const { title, items } = collection;
 
-  if (isCollectionLoaded) {
+  if (items.length === 0) {
+    res = <h1>Not found</h1>;
+  } else {
     res = (
-      <CollectionPageContainer>
-        <CollectionTitle>{collection!!.title}</CollectionTitle>
+      <React.Fragment>
+        <CollectionTitle>{title}</CollectionTitle>
         <CollectionItemsContainer>
-          {collection!!.items.map(item => (
+          {items.map(item => (
             <CollectionItem key={item.id} item={item} />
           ))}
         </CollectionItemsContainer>
-      </CollectionPageContainer>
-    );
-  } else {
-    res = (
-      <CollectionPageContainer>
-        <h1>Not found</h1>
-      </CollectionPageContainer>
+      </React.Fragment>
     );
   }
-
-  return res;
+  return <CollectionPageContainer>{res}</CollectionPageContainer>;
 };
 
 export default CollectionPage;

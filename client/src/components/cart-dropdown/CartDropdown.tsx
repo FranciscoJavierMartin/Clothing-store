@@ -1,12 +1,8 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext } from 'react';
 import CartItem from '../cart-item/CartItem';
-import { IGlobalState } from '../../interfaces/states';
-import { IShopItem } from '../../interfaces/common';
-import { selectCartItems } from '../../store/cart/cartSelectors';
 import { useHistory } from 'react-router';
 import { checkoutPath } from '../../constansts/routesName';
-import * as cartActions from '../../store/cart/cartActions';
+import { CartContext } from '../../provider/cart/cartProvider';
 import {
   CartDropdownContainer,
   CartDropdownButton,
@@ -15,10 +11,8 @@ import {
 } from './CartDropdown.styles';
 
 const CartDropdown: React.FC = () => {
-  const cartItems = useSelector<IGlobalState, IShopItem[]>(selectCartItems);
-  const dispatch = useDispatch();
   const history = useHistory();
-
+  const { cartItems, toggleHidden }  = useContext(CartContext);
   return (
     <CartDropdownContainer>
       <CartItemsContainer>
@@ -32,7 +26,7 @@ const CartDropdown: React.FC = () => {
       </CartItemsContainer>
       <CartDropdownButton
         onClick={() => {
-          dispatch(cartActions.toggleCartHidden());
+          toggleHidden();
           history.push(checkoutPath);
         }}
       >

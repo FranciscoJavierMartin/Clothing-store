@@ -1,13 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { IGlobalState } from '../../interfaces/states';
-import { IShopItem } from '../../interfaces/common';
-import {
-  selectCartItems,
-  selectCartTotalPrice
-} from '../../store/cart/cartSelectors';
+import React, { useContext } from 'react';
 import CheckoutItem from '../../components/checkout-item/CheckoutItem';
 import StripeCheckoutButton from '../../components/stripe-checkout-button/StripeCheckoutButton';
+import { CartContext } from '../../provider/cart/cartProvider';
 import {
   CheckoutPageContainer,
   CheckoutHeaderContainer,
@@ -17,10 +11,8 @@ import {
 } from './CheckoutPage.styles';
 
 const CheckoutPage: React.FC = () => {
-  const cartItems = useSelector<IGlobalState, IShopItem[]>(selectCartItems);
-  const totalPrice = useSelector<IGlobalState, number>(selectCartTotalPrice);
+  const { cartItems, cartTotal } = useContext(CartContext);
 
-  // TODO: Replace for table html
   return (
     <CheckoutPageContainer>
       <CheckoutHeaderContainer>
@@ -44,14 +36,14 @@ const CheckoutPage: React.FC = () => {
         <CheckoutItem key={cartItem.id} item={cartItem} />
       ))}
       <TotalContainer>
-        <span>TOTAL: ${totalPrice}</span>
+        <span>TOTAL: ${cartTotal}</span>
       </TotalContainer>
       <WarningContainer>
         *Please use the following test credit card for payments*
         <br />
         4242 4242 4242 4242 - Exp: 01/20 - CVV: 123
       </WarningContainer>
-      <StripeCheckoutButton price={totalPrice} />
+      <StripeCheckoutButton price={cartTotal} />
     </CheckoutPageContainer>
   );
 };

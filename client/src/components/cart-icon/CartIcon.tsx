@@ -1,8 +1,5 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as cartActions from '../../store/cart/cartActions';
-import { IGlobalState } from '../../interfaces/states';
-import { selectCartItemsCount } from '../../store/cart/cartSelectors';
+import React, { useContext } from 'react';
+import { CartContext } from '../../provider/cart/cartProvider';
 import {
   CartContainer,
   ShoppingIcon,
@@ -10,18 +7,12 @@ import {
 } from './CartIcon.styles';
 
 const CartIcon: React.FC = () => {
-  const dispatch = useDispatch();
-  const numberOfItemsInCart = useSelector<IGlobalState, number>(
-    selectCartItemsCount
-  );
-
+  const { toggleHidden, cartItemsCount } = useContext(CartContext);
   return (
-    <CartContainer
-      onClick={() => dispatch(cartActions.toggleCartHidden())}
-    >
+    <CartContainer onClick={toggleHidden}>
       <ShoppingIcon />
       <ItemCountContainer>
-        {numberOfItemsInCart > 9 ? '+9' : numberOfItemsInCart}
+        {cartItemsCount > 9 ? '+9' : cartItemsCount}
       </ItemCountContainer>
     </CartContainer>
   );

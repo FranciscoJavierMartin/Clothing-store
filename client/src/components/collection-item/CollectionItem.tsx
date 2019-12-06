@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import * as cartActions from '../../store/cart/cartActions';
 import { IShopItem } from '../../interfaces/common';
+import { CartContext } from '../../provider/cart/cartProvider';
 import {
   CollectionItemContainer,
   CollectionFooterContainer,
@@ -18,10 +19,9 @@ interface ICollectionItemProps {
 const CollectionItem: React.FC<ICollectionItemProps> = (
   props: ICollectionItemProps
 ) => {
-  const dispatch = useDispatch();
   const { name, price, imageUrl } = props.item;
-  // FIXME: Fix the button styles
-  
+  const { addItem } = useContext(CartContext);
+
   return (
     <CollectionItemContainer>
       <BackgroundImage className='image' imageUrl={imageUrl} />
@@ -29,10 +29,7 @@ const CollectionItem: React.FC<ICollectionItemProps> = (
         <NameContainer>{name}</NameContainer>
         <PriceContainer>{price}</PriceContainer>
       </CollectionFooterContainer>
-      <AddButton
-        onClick={() => dispatch(cartActions.addItem(props.item))}
-        inverted
-      >
+      <AddButton onClick={() => addItem(props.item)} inverted>
         Add to cart
       </AddButton>
     </CollectionItemContainer>

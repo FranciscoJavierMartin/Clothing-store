@@ -1,18 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { DirectoryMenuContainer } from './Directory.styles';
 import MenuItem from '../menu-item/MenuItem';
 import { IHomeSection } from '../../interfaces/common';
-import { useSelector } from 'react-redux';
-import { IGlobalState } from '../../interfaces/states';
-import { selectDirectorySections } from '../../store/directory/directorySelectors';
 import { RouteComponentProps } from 'react-router';
+import DirectoryContext from '../../contexts/directory/DirectoryContext';
 
 interface IDirectoryProps extends RouteComponentProps{}
 
 const Directory: React.FC<IDirectoryProps> = (props: IDirectoryProps) => {
-  const sections = useSelector<IGlobalState, IHomeSection[]>(
-    selectDirectorySections
-  );
+  const sections = useContext(DirectoryContext);
 
   return (
     <DirectoryMenuContainer data-test='directory-component'>
