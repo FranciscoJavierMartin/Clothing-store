@@ -2,8 +2,8 @@
   "name": "clothing-store-server",
   "version": "1.0.0",
   "engines": {
-    "node": "10.16.3",
-    "npm": "6.9.0"
+    "node": "12.13.1",
+    "npm": "6.12.1"
   },
   "scripts": {
     "client": "cd client && yarn start",
