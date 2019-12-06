@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { IShopItem } from '../../interfaces/common';
-import { useDispatch } from 'react-redux';
-import * as cartActions from '../../store/cart/cartActions';
+import { CartContext } from '../../provider/cart/cartProvider';
 import {
   CheckoutItemContainer,
   ImageContainer,
@@ -17,9 +16,7 @@ interface ICheckoutItemProps {
 const CheckoutItem: React.FC<ICheckoutItemProps> = (
   props: ICheckoutItemProps
 ) => {
-  const dispatch = useDispatch();
-  // TODO: Disable the the left arrow when value is one
-  console.log(props.item.imageUrl);
+  const { addItem, removeItem, clearItemFromCart } = useContext(CartContext);
   return (
     <CheckoutItemContainer>
       <ImageContainer>
@@ -30,20 +27,18 @@ const CheckoutItem: React.FC<ICheckoutItemProps> = (
         <div
           onClick={() => {
             if (props.item.quantity && props.item.quantity > 1) {
-              dispatch(cartActions.removeItem(props.item));
+              removeItem(props.item);
             }
           }}
         >
           &#10094;
         </div>
         <span>{props.item.quantity}</span>
-        <div onClick={() => dispatch(cartActions.addItem(props.item))}>
-          &#10095;
-        </div>
+        <div onClick={() => addItem(props.item)}>&#10095;</div>
       </QuantityContainer>
       <TextContainer>${props.item.price}</TextContainer>
       <RemoveButtonContainer
-        onClick={() => dispatch(cartActions.clearItemFromCart(props.item))}
+        onClick={() => clearItemFromCart(props.item)}
       >
         &#10005;
       </RemoveButtonContainer>
