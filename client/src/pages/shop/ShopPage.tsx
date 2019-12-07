@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, RouteComponentProps } from 'react-router';
-import CollectionOverview from '../../components/collections-overview/CollectionsOverview';
-import CollectionPage from '../collection/CollectionPage';
+import CollectionOverview from '../../components/collections-overview/CollectionsOverviewContainer';
+import CollectionPage from '../collection/CollectionPageContainer';
 
 interface IShopPageProps extends RouteComponentProps {}
 

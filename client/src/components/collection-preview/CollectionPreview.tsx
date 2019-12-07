@@ -1,5 +1,5 @@
 import React from 'react';
-import CollectionItem from '../collection-item/CollectionItem';
+import CollectionItem from '../collection-item/CollectionItemContainer';
 import { IShopItem } from '../../interfaces/common';
 import {
   CollectionPreviewContainer,

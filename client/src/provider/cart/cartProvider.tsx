@@ -60,7 +60,7 @@ const CartProvider = ({ children }: any) => {
   );
 };
 
-function addItemToCart(
+export function addItemToCart(
   cartItems: IShopItem[],
   cartItemToAdd: IShopItem
 ): IShopItem[] {
@@ -117,7 +117,7 @@ function filterItemFromCart(
   return cartItems.filter(cartItem => cartItem.id !== item.id);
 }
 
-function getCartItemsCount(cartItems: IShopItem[]): number {
+export function getCartItemsCount(cartItems: IShopItem[]): number {
   return cartItems.reduce(
     (accumulatedQuantity: number, cartItem: IShopItem) =>
       accumulatedQuantity + (cartItem.quantity || 1),

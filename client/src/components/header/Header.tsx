@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import CartIcon from '../cart-icon/CartIcon';
-import CartDropdown from '../cart-dropdown/CartDropdown';
+import CartIcon from '../cart-icon/CartIconContainer';
+import CartDropdown from '../cart-dropdown/CartDropdownContainer';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import { shopPath, signInPath } from '../../constansts/routesName';
 import CurrentUserContext from '../../contexts/current-user/currentUserContext';
