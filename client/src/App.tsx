@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import './App.module.scss';
 import HomePage from './pages/home/HomePage';
 import ShopPage from './pages/shop/ShopPage';
 import SignInPage from './pages/sign-in/SignIn';
@@ -16,6 +15,7 @@ import {
 } from './constansts/routesName';
 import CurrentUserContext from './contexts/current-user/currentUserContext';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { GlobalStyles } from './global.styles';
 
 const App: React.FC<any> = (props: any) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -50,6 +50,7 @@ const App: React.FC<any> = (props: any) => {
   return (
     // TODO: Remove data-test in production
     <div data-test='component-app'>
+      <GlobalStyles/>
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
       </CurrentUserContext.Provider>
