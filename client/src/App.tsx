@@ -6,7 +6,7 @@ import ShopPage from './pages/shop/ShopPage';
 import SignInPage from './pages/sign-in/SignIn';
 import SignUpPage from './pages/sign-up/SignUp';
 import CheckoutPage from './pages/checkout/CheckoutPage';
-import Header from './components/header/Header';
+import Header from './components/header/HeaderContainer';
 import {
   homePath,
   shopPath,
