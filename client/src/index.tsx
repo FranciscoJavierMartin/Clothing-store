@@ -8,6 +8,7 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-boost';
 import { resolvers, typeDefs } from './graphql/resolvers';
+import * as serviceWorker from './serviceWorker';
 
 import './index.scss';
 import App from './App';
@@ -44,3 +45,5 @@ ReactDOM.render(
   </ApolloProvider>,
   document.getElementById('root')
 );
+
+serviceWorker.register();
