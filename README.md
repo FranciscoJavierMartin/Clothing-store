@@ -1,4 +1,4 @@
-# Clothing store
+# Clothing shop
 
 To initialize the project, create a file named ```.env``` in the client folder that contains the following keys.
 ```
