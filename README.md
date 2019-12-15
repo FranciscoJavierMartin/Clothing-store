@@ -1,5 +1,7 @@
 # Clothing shop
 
+## Pages
+![Home](docs/images/HomePage.jpg)
 To initialize the project, create a file named ```.env``` in the client folder that contains the following keys.
 ```
 REACT_APP_API_KEY
