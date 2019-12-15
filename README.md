@@ -1,7 +1,22 @@
 # Clothing shop
 
 ## Pages
-![Home](docs/images/HomePage.jpg)
+**Home**
+![Home](/docs/images/Home.jpg)
+**Shop**
+![Shop](/docs/images/ShopPage.jpg)
+**Cart dropdown**
+![Cart](/docs/images/Cart.jpg)
+**Cart**
+![Cart](/docs/images/CartPage.jpg)
+**Payment**
+![Payment](/docs/images/PaymentPage.jpg)
+**SignIn**
+![SignIn](/docs/images/SignIn.jpg)
+**SignUp**
+![SignUp](/docs/images/SignUp.jpg)
+
+## Setup
 To initialize the project, create a file named ```.env``` in the client folder that contains the following keys.
 ```
 REACT_APP_API_KEY
